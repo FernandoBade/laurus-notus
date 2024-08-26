@@ -9,23 +9,27 @@ export default function LoginForm() {
 	const [erro, setErro] = useState(null);
 	const router = useRouter();
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			console.log(email, senha);
-			const data = await login(email, senha);
-			setCookie('authToken', data.token, { expires: 7 });
-			router.replace('/admin/dashboard');
-		} catch (err) {
-			setErro(err.message);
-		}
-	};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await login(email, senha);
 
+      if (data && data.dados && data.dados.tokenAcesso) {
+        setCookie('laurusToken', data.dados.tokenAcesso, { expires: 7, path: '/' });
+        router.replace('/admin/dashboard');
+      } else {
+        throw new Error('Token de acesso não recebido. Verifique o retorno da API.');
+      }
+    } catch (err) {
+      setErro(err.message);
+    }
+	};
+	
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="relative w-full mb-3">
 				<label className="block mb-2 text-xs font-bold text-blueGray-600">
-          Email
+					Email
 				</label>
 				<input
 					type="email"
@@ -38,7 +42,7 @@ export default function LoginForm() {
 
 			<div className="relative w-full mb-3">
 				<label className="block mb-2 text-xs font-bold text-blueGray-600">
-          Password
+					Password
 				</label>
 				<input
 					type="password"
@@ -56,7 +60,7 @@ export default function LoginForm() {
 					type="submit"
 					className="w-full px-6 py-2 text-sm font-bold text-white uppercase rounded-lg shadow bg-blueGray-800 hover:shadow-lg focus:outline-none"
 				>
-          Sign In
+					Sign In
 				</button>
 			</div>
 		</form>

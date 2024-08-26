@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/no-deprecated */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'next/app';
@@ -58,7 +56,7 @@ export default class MyApp extends App {
 						content="width=device-width, initial-scale=1, shrink-to-fit=no"
 					/>
 					<title>Notus NextJS by Creative Tim</title>
-					<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+					{/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> */}
 				</Head>
 				<Layout>
 					<Component {...pageProps} />
